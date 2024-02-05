@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function index()
+    public function dashboard()
     {
-        return "nice";
+        return view('admin.dashboard');
     }
 }
