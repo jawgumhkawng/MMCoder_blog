@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
 {
@@ -14,6 +15,18 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        return $request->all();
+        $cre = request()->only('email', 'password');
+        $checkAuth = Auth::guard('admin')->attempt($cre);
+
+        if (!$checkAuth) {
+            return redirect()->back()->with('Admin Only Can Access');
+        }
+        return redirect('/admin')->with('success', 'Welcome' . auth()->guard('admin')->name);
+    }
+
+    public function logout()
+    {
+        auth()->guard('admin')->logout();
+        return redirect('/');
     }
 }

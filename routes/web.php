@@ -13,13 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', 'Admin\PageController@index');
+Route::get('/', 'PageController@index');
 
 
 Route::get('/admin/login', 'Admin\AuthController@showlogin');
 Route::post('/admin/login', 'Admin\AuthController@login');
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.', 'middleware' => 'RedirectIfNotAdmin'], function () {
 
     Route::get('/', 'PageController@dashboard');
+    Route::get('/logout', 'AuthController@logout');
+    Route::resource('/programming', 'ProgrammingController');
 });

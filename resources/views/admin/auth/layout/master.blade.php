@@ -16,6 +16,9 @@
     <link href="{{ asset('./assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link href="{{ asset('./assets/css/argon-dashboard.css?v=1.1.2') }}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @yield('css')
 </head>
 
 <body class="">
@@ -77,7 +80,7 @@
                             <span>Support</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#!" class="dropdown-item">
+                        <a href="{{ url('admin/logout') }}" class="dropdown-item">
                             <i class="ni ni-user-run"></i>
                             <span>Logout</span>
                         </a>
@@ -107,7 +110,7 @@
                 <!-- Form -->
                 <form class="mt-4 mb-3 d-md-none">
                     <div class="input-group input-group-rounded input-group-merge">
-                        <input type="search" class="form-control form-control-rounded form-control-prepended"
+                        <input type="search" class="form-control form-control-rounded form-control-prepended px-0"
                             placeholder="Search" aria-label="Search">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -217,7 +220,7 @@
                                 <span>Support</span>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#!" class="dropdown-item">
+                            <a href="{{ url('admin/logout') }}" class="dropdown-item">
                                 <i class="ni ni-user-run"></i>
                                 <span>Logout</span>
                             </a>
@@ -238,7 +241,9 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
+                                            <h5 class="card-title text-uppercase text-muted mb-0">
+                                                @yield('content')
+                                            </h5>
                                             <span class="h2 font-weight-bold mb-0">350,897</span>
                                         </div>
                                         <div class="col-auto">
@@ -640,12 +645,25 @@
     <!--   Argon JS   -->
     <script src="{{ asset('./assets/js/argon-dashboard.min.js?v=1.1.2') }}"></script>
     <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+
+    @yield('script')
     <script>
-        window.TrackJS &&
-            TrackJS.install({
-                token: "ee6fab19c5a04ac1a32a645abde4613a",
-                application: "argon-dashboard-free"
-            });
+        // window.TrackJS &&
+        //     TrackJS.install({
+        //         token: "ee6fab19c5a04ac1a32a645abde4613a",
+        //         application: "argon-dashboard-free"
+        //     });
+
+        // Display an info toast with no title
+        @if (session()->has('error'))
+            toastr.error("{{ session('error') }}")
+        @endif
+        @if (session()->has('success'))
+            toastr.success("{{ session('success') }}")
+        @endif
     </script>
 </body>
 

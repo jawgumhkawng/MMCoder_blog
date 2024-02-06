@@ -18,7 +18,7 @@
                 <div class="card shadow-lg">
                     <div class="card-header">Admin Login</div>
                     <div class="card-body">
-                        <form action="{{ url('/admin.login') }}" method="post">
+                        <form action="{{ url('/admin/login') }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="">Enter Email</label>
