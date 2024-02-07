@@ -9,7 +9,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'image', 'like_count', 'view_count'];
+    protected $fillable = ['slug', 'title', 'content', 'image', 'like_count', 'view_count'];
 
     public function comment()
     {

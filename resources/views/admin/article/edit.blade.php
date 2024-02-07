@@ -6,13 +6,14 @@
     </div>
 
     <hr>
-    <form action="{{ route('admin.programming.store') }}" method="post">
+    <form action="{{ route('admin.programming.update', $data->slug) }}" method="post">
+        @method('put')
         @csrf
         <div class="form-group">
             <label for="name" class="text-white">Name</label>
-            <input type="text" name="name" class="form-control" placeholder="fill the name">
+            <input type="text" name="name" value="{{ $data->slug }}" class="form-control">
 
         </div>
-        <input type="submit" class="btn  btn-dark" value="Create">
+        <input type="submit" class="btn  btn-dark" value="Update">
     </form>
 @endsection

@@ -2,7 +2,7 @@
 
 @section('content')
     <div>
-        <a href="{{ route('admin.programming.create') }}" class="btn btn-success">Create</a>
+        <a href="{{ route('admin.tag.create') }}" class="btn btn-success">Create</a>
     </div>
     <hr>
     <table class="table table-striped text-white">
@@ -19,9 +19,9 @@
                     <td>{{ $d->slug }}</td>
                     <td>{{ $d->name }}</td>
                     <td class="">
-                        <a href="{{ route('admin.programming.edit', $d->slug) }}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{{ route('admin.tag.edit', $d->slug) }}" class="btn btn-sm btn-primary">Edit</a>
 
-                        <form action="{{ route('admin.programming.destroy', $d->slug) }}" class="d-inline" method="post">
+                        <form action="{{ route('admin.tag.destroy', $d->slug) }}" class="d-inline" method="post">
                             @csrf
                             @method('delete')
                             <input type="submit" class="btn btn-sm btn-danger" value="Delete">

@@ -60,7 +60,8 @@ class ProgrammingController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Programming::where('slug', $id)->first();
+        return view('admin.programming.edit', compact('data'));
     }
 
     /**
@@ -68,7 +69,13 @@ class ProgrammingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $updateSlug = Str::slug($request->name);
+        Programming::where('slug', $id)->update([
+            'slug' => $updateSlug,
+            'name' => $request->name
+        ]);
+
+        return redirect(route('admin.programming.edit', $updateSlug))->with('success', 'Updated Successfully!');
     }
 
     /**
@@ -76,6 +83,7 @@ class ProgrammingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Programming::where('slug', $id)->delete();
+        return redirect()->back()->with('success', 'deleted!');
     }
 }
