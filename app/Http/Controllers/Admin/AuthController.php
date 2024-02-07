@@ -21,7 +21,7 @@ class AuthController extends Controller
         if (!$checkAuth) {
             return redirect()->back()->with('Admin Only Can Access');
         }
-        return redirect('/admin')->with('success', 'Welcome' . auth()->guard('admin')->name);
+        return redirect('/admin')->with('success', 'Welcome  ' . auth()->guard('admin')->name);
     }
 
     public function logout()

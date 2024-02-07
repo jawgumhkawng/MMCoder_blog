@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Programming;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProgrammingController extends Controller
 {
@@ -12,7 +14,8 @@ class ProgrammingController extends Controller
      */
     public function index()
     {
-        //
+        $data = Programming::orderBy('id', 'desc')->paginate(5);
+        return view('admin.programming.index', compact('data'));
     }
 
     /**
@@ -20,7 +23,7 @@ class ProgrammingController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.programming.create');
     }
 
     /**
@@ -28,7 +31,20 @@ class ProgrammingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'name' => 'required'
+            ],
+            ['name.required' => 'Fill Programming Name! ']
+        );
+
+        Programming::create([
+            'slug' => Str::slug($request->name),
+            'name' => $request->name
+        ]);
+
+
+        return redirect()->back()->with('success', 'Programming Create Successfuly');
     }
 
     /**
