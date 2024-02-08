@@ -83,7 +83,9 @@ class ArticleController extends Controller
     public function edit(string $id)
     {
         $data = Article::where('slug', $id)->first();
-        return view('admin.programming.edit', compact('data'));
+        $tag = Tag::all();
+        $programming = Programming::all();
+        return view('admin.article.edit', compact('data', 'tag', 'programming'));
     }
 
     /**
@@ -91,13 +93,33 @@ class ArticleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $updateSlug = Str::slug($request->name);
-        Article::where('slug', $id)->update([
-            'slug' => $updateSlug,
-            'name' => $request->name
+
+        $data = Article::find($id);
+        //image
+        if ($file = $request->file('iamge')) {
+            File::delete(public_path('/images/' . $data->image));
+            $file_name = uniqid() . $file->getClientOriginalName();
+            $file->move(public_path('/images'), $file_name);
+        } else {
+
+            $file_name = $data->image;
+        }
+
+        //article
+        $data->update([
+            'slug' => Str::slug($request->title),
+            'title' => $request->title,
+            'content' => $request->content,
+            'image' => $file_name,
+
         ]);
 
-        return redirect(route('admin.programming.edit', $updateSlug))->with('success', 'Updated Successfully!');
+        //tag & programming
+
+        $data->tag()->sync($request->tag);
+        $data->programming()->sync($request->programming);
+
+        return redirect(route('admin.article.index'))->with('success', 'Updated Successfully!');
     }
 
     /**

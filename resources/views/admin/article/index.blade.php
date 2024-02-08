@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <img src="{{ asset('/images/' . $d->image) }}" class="img-thumnail w-100 mb-3 rounded"
+                        <img src="{{ asset('/images/' . $d->image) }}" class="img-thumbnail w-100 mb-3 rounded"
                             alt="">
 
                         @foreach ($d->tag as $tag)
